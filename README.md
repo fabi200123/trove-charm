@@ -1,3 +1,1 @@
-# charm-trove
-
-OpenStack Trove Juju charm
+src/README.md
