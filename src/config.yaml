@@ -1,1 +1,66 @@
 options:
+  openstack-origin:
+    type: string
+    default: antelope
+    description: |
+      Repository from which to install. May be one of the following:
+      distro (default), ppa:somecustom/ppa, a deb url sources entry,
+      or a supported Ubuntu Cloud Archive e.g.
+      .
+      cloud:<series>-<openstack-release>
+      cloud:<series>-<openstack-release>/updates
+      cloud:<series>-<openstack-release>/staging
+      cloud:<series>-<openstack-release>/proposed
+      .
+      See https://wiki.ubuntu.com/OpenStack/CloudArchive for info on which
+      cloud archives are available and supported.
+      .
+      NOTE: updating this setting to a source that is known to provide
+      a later version of OpenStack will trigger a software upgrade unless
+      action-managed-upgrade is set to True.
+  rabbit-user:
+    type: string
+    default: trove
+    description: Username used to access rabbitmq queue.
+  database-user:
+    type: string
+    default: trove
+    description: Username for Trove database access.
+  database:
+    type: string
+    default: trove
+    description: Database name for Trove.
+  management-networks:
+    type: string
+    default: ""
+    description: |
+      List of IDs for management networks which should be attached to the instance
+      regardless of what NICs are specified in the create API call. Currently only
+      one management network is allowed.
+  management-security-groups:
+    type: string
+    default: ""
+    description: |
+      Comma-separated list of the security group IDs that are applied on the
+      management port of the database instance.
+  ip-regex:
+    type: string
+    default: ""
+    description: |
+      List IP addresses that match this regular expression.
+  ip-black-list-regex:
+    type: string
+    default: ""
+    description: |
+      Exclude IP addresses that match this regular expression.
+  cinder-volume-type:
+    type: string
+    default: ""
+    description: |
+      Volume type to use when provisioning a Cinder volume.
+  nova-keypair:
+    type: string
+    default: ""
+    description: |
+      Name of a Nova keypair to inject into a database instance to enable SSH
+      access. The keypair should be prior created by the cloud operator.

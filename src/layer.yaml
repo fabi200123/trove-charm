@@ -1,4 +1,12 @@
-includes: ['layer:openstack-api']
+includes:
+  - layer:openstack-api
+  - layer:leadership
+  - interface:mysql-shared
+  - interface:rabbitmq
+  - interface:keystone
+  - interface:hacluster
+  - interface:openstack-ha
+repo: https://github.com/cloudbase/trove-charm
 options:
   basic:
     use_venv: True

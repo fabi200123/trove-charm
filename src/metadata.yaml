@@ -1,11 +1,22 @@
 name: trove
-maintainer: example@example.com
-summary: Short summary of charm
+maintainer: Claudiu Belu <cbelu@cloudbasesolutions.com>
+summary: OpenStack DBaaS component
 description: |
-  Longline summary of charm 
+  Trove is Database as a Service for OpenStack. It's designed to run entirely
+  on OpenStack, with the goal of allowing users to quickly and easily utilize
+  the features of a relational database without the burden of handling complex
+  administrative tasks.
 tags:
   - openstack
+  - database
 series:
-  - xenial
-  - trusty
-  - yakkety
+  - focal
+  - jammy
+subordinate: false
+requires:
+  shared-db:
+    interface: mysql-shared
+  amqp:
+    interface: rabbitmq
+  identity-service:
+    interface: keystone

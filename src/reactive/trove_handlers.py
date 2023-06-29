@@ -20,20 +20,23 @@ import charms.reactive as reactive
 import charm.openstack.trove as trove  # noqa
 
 
+# Use the charms.openstack defaults for common states and hooks
 charm.use_defaults(
     'charm.installed',
     'amqp.connected',
     'shared-db.connected',
     'identity-service.connected',
-    'identity-service.available',  # enables SSL support
     'config.changed',
     'update-status',
+    'upgrade-charm',
+    'cluster.available',
 )
 
 
 @reactive.when('shared-db.available')
 @reactive.when('identity-service.available')
 @reactive.when('amqp.available')
+@reactive.when_not('is-update-status-hook')
 def render_config(*args):
     """Render the configuration for charm when all the interfaces are
     available.
@@ -47,12 +50,18 @@ def render_config(*args):
 
 # db_sync checks if sync has been done so rerunning is a noop
 @reactive.when('config.rendered')
+@reactive.when_not('db.synced')
 def init_db():
     with charm.provide_charm_instance() as charm_class:
         charm_class.db_sync()
+        charm_class.restart_all()
+        charm_class.assess_status()
+    reactive.set_state('db.synced')
 
 
 @reactive.when('ha.connected')
+@reactive.when_not('ha.available')
+@reactive.when_not('is-update-status-hook')
 def cluster_connected(hacluster):
     """Configure HA resources in corosync."""
     with charm.provide_charm_instance() as charm_class:
