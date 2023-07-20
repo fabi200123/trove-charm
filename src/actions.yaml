@@ -1,0 +1,20 @@
+db-load-datastore-config-params:
+  description: |
+    Loads configuration group parameter validation rules for a datastore
+    version into the database.
+  params:
+    datastore:
+      type: string
+      description: Name of the datastore.
+    datastore-version-name:
+      type: string
+      description: Name of the datastore version.
+    config-file:
+      type: string
+      description: URL to the configuration group parameter validation rules.
+    version:
+      type: string
+      description: |
+        The version number of the datastore version, e.g. 5.7.30. If not
+        specified, datastore-version-name will be used as default value.
+  required: [datastore, datastore-version-name, config-file]
