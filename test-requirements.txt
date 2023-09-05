@@ -1,6 +1,9 @@
 # Unit test requirements
-flake8>=2.2.4,<=2.4.1
-os-testr>=0.4.1
+flake8<=6.1.0
+stestr>=2.2.0
+# There is an issue with python-subunit 1.4.3 which causes stestr run to not
+# be a valid command.
+python-subunit<1.4.3
 charms.reactive
 coverage>=3.6
 git+https://github.com/openstack/charms.openstack#egg=charms.openstack
