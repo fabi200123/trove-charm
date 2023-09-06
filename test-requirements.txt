@@ -7,3 +7,5 @@ python-subunit<1.4.3
 charms.reactive
 coverage>=3.6
 git+https://github.com/openstack/charms.openstack#egg=charms.openstack
+
+oslotest>=3.8.0
