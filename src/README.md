@@ -74,14 +74,13 @@ juju config neutron-gateway bridge-mappings="physnet1:br-ex physnet2:br-trove" d
 juju config neutron-openvswitch bridge-mappings="physnet2:br-trove" data-port="br-trove:eth2"
 
 # Define the flat OpenStack network and subnet.
-openstack network create --share --external --provider-network-type=flat \
+openstack network create --share --provider-network-type=flat \
   --provider-physical-network=physnet2 --description "Trove management network" trove-net
-openstack subnet create --subnet-range=10.8.102.0/24 --gateway=none \
-  --network trove-net trove-subnet
 
-# Create a router for the Trove Network, and add a route to the Management Network.
-openstack router create trove-router --external-gateway trove-net
-openstack router add route --route destination=10.8.11.0/24,gateway=10.8.102.1 trove-router
+# We specify --gateway=none so it will not create 2 default routes
+openstack subnet create --subnet-range=10.8.102.0/24 --gateway=none \
+  --host-route destination=10.8.11.0/24,gateway=10.8.102.1 \
+  --network trove-net trove-subnet
 ```
 
 The Neutron network created above will be used to configure the Trove charm,
