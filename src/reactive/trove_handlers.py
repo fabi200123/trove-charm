@@ -29,6 +29,7 @@ charm.use_defaults(
     'config.changed',
     'update-status',
     'upgrade-charm',
+    'certificates.available',
     'cluster.available',
 )
 
@@ -44,6 +45,7 @@ def render_config(*args):
     with charm.provide_charm_instance() as charm_class:
         charm_class.upgrade_if_available(args)
         charm_class.render_with_interfaces(args)
+        charm_class.configure_ssl()
         charm_class.assess_status()
     reactive.set_state('config.rendered')
 
